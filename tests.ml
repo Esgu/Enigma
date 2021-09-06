@@ -6,7 +6,7 @@ open Symbol
 (* open Cycles *)
 (* open Path *)
 (* open Board *)
-   
+
 let () =
   if Filename.basename Sys.argv.(0) = "tests" then begin
       Printf.printf "Testing Symbol Module:\t";
@@ -24,25 +24,25 @@ let () =
       assert ((of_char 'D') -- (of_char 'L') = of_char 'S');
       assert (fold (fun _ c -> c) a = of_char 'Z');
       assert (fold (fun n _ -> n+1) 0 = nb_syms);
-      
+
       let s = Symbol.Set.add (of_char 'B') (Symbol.Set.singleton (of_char 'E')) in
       assert (Symbol.Set.member (of_char 'E') s);
       assert (Symbol.Set.member (of_char 'B') s);
       assert (Symbol.Set.member (of_char 'F') s = false);
-      
+
       let sa = Symbol.Set.add (of_char 'A')
                 (Symbol.Set.add (of_char 'A') Symbol.Set.empty) in
       assert (Symbol.Set.member (of_char 'A') sa);
-      
+
       let sfull = fold (fun s c -> Symbol.Set.add c s) Symbol.Set.empty in
       iter (fun c -> assert (Symbol.Set.member c sfull));
-      
+
       let mfull = Symbol.Map.make sfull in
       assert (Symbol.Set.member a (Symbol.Map.get mfull (of_char 'K')));
 
       let mplusone = Symbol.Map.init (fun c -> c ++ (of_char 'B')) in
       assert (Symbol.Map.get mplusone (of_char 'Z') = a);
-      
+
       let mint = Symbol.Map.init (fun c -> to_int c) in
       let mcopy = Symbol.Map.copy mint in
       Symbol.Map.set mcopy (of_char 'L') 0;
@@ -56,7 +56,7 @@ let () =
       let mminusone = Symbol.Map.inverse mplusone in
       assert (Symbol.Map.get mminusone (of_char 'W') = of_char 'V');
       assert (Symbol.Map.get mminusone (of_char 'A') = of_char 'Z');
-      
+
       Printf.printf "OK\n";
     end
 
@@ -68,7 +68,7 @@ let () =
       add_edge g a (of_char 'B') 1;
       add_edge g a (of_char 'C') 2;
       add_edge g (of_char 'B') a 3;
-      
+
       assert (get_edge g (of_char 'B') (of_char 'C') = Positions.empty);
       assert (Positions.mem 3 (get_edge g a (of_char 'B')));
       assert (Positions.mem 1 (get_edge g a (of_char 'B')));
@@ -80,7 +80,7 @@ let () =
       assert (fold_over_connected g (fun i _ -> i+1) 0 a = 2);
       add_edge g a (of_char 'Z') 4;
       assert (fold_over_connected g (fun i _ -> i+1) 0 a = 3);
-                      
+
       Printf.printf "OK\n";
     end
  *)
@@ -119,12 +119,12 @@ let () =
 
       assert (Path.compare p p = 0);
       assert (Path.compare p' p > 0);
-              
+
       Printf.printf "OK\n";
     end
  *)
 
-(*  
+(*
 let () =
   if Filename.basename Sys.argv.(0) = "tests" then begin
       Printf.printf "Testing Cycles Module:\t";
@@ -134,9 +134,9 @@ let () =
        * In the previous example, for messages "ABCDBAA" and "ZZHKYYY",
        * you should find 7 useful cycles in the multi-graph,
        * which correspond to 11 cycles in the original graph
-       * 
+       *
        * The unexpanded cycles are the following ones: *)
-      
+
       (* - A(5,6)Y(5,6)A
        * - A(5,6)Y(4)B(1)Z(0)A
        * - A(0)Z(0)A
@@ -145,21 +145,21 @@ let () =
        * - C(2)H(2)C
        * - D(3)K(3)D *)
 
-      (* Write some tests for your functions to see if you get 
+      (* Write some tests for your functions to see if you get
        * the same numbers of cycles *)
 
       Printf.printf "TODO\n";
     end
  *)
 
-(*  
+(*
 let () =
   if Filename.basename Sys.argv.(0) = "tests" then begin
       Printf.printf "Board (1st version):\t";
       let b = top () in
       assert (possible b a a);
       assert (possible b (of_char 'Z') (of_char 'J'));
-      
+
       remove_assoc b a a;
       assert (possible b a a = false);
       assert (possible b (of_char 'Z') (of_char 'J'));
@@ -191,13 +191,13 @@ let () =
     end
  *)
 
-(*  
+(*
 let () =
   if Filename.basename Sys.argv.(0) = "tests" then begin
       Printf.printf "Board (semipersistent):\t";
       let b = top () in
       assert (possible b a a);
-      
+
       remove_assoc b a (of_char 'X');
       assert (possible b a (of_char 'X') = false);
 
@@ -223,7 +223,7 @@ let () =
       assert (possible b a (of_char 'V'));
       assert (possible b (of_char 'V') a);
       assert (possible b a (of_char 'B'));
-      assert (possible b (of_char 'B') a);      
+      assert (possible b (of_char 'B') a);
 
       Printf.printf "OK\n";
     end
